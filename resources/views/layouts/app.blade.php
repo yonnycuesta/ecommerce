@@ -43,7 +43,7 @@
 									
 									<li>
 										
-										<a href="">Login/Admin<i class="fas fa-chevron-down"></i></a>
+										<a href="{{ route('admin.login') }}">Login/Admin<i class="fas fa-chevron-down"></i></a>
 										
 									</li>
 									<li>
@@ -67,7 +67,7 @@
 							</div>
 							<div class="top_bar_user">
 								@guest
-								<div><a href=""><div class="user_icon"><img src="{{ asset('public/frontend/images/user.svg') }}" alt=""></div>Register/Login</a></div>
+								<div><a href="{{ route('login') }}"><div class="user_icon"><img src="{{ asset('public/frontend/images/user.svg') }}" alt=""></div>Register/Login</a></div>
 									@else
 									<ul class="standard_dropdown top_bar_dropdown">
 										<li>

@@ -50,7 +50,9 @@
   </head>
 
   <body>
+    @guest
 
+    @else
  
   
         <!-- ########## START: LEFT PANEL ########## -->
@@ -174,8 +176,8 @@
          <div class="dropdown-menu dropdown-menu-header wd-200">
            <ul class="list-unstyled user-profile-nav">
              <li><a href=""><i class="icon ion-ios-person-outline"></i> Edit Profile</a></li>
-             <li><a href=""><i class="icon ion-ios-gear-outline"></i> Settings</a></li>
-             <li><a href=""><i class="icon ion-power"></i> Sign Out</a></li>
+             <li><a href="{{ route('admin.password.change') }}"><i class="icon ion-ios-gear-outline"></i> Settings</a></li>
+             <li><a href="{{ route('admin.logout') }}"><i class="icon ion-power"></i> Sign Out</a></li>
            </ul>
          </div><!-- dropdown-menu -->
        </div><!-- dropdown -->
@@ -344,7 +346,7 @@
          </a>
        </div><!-- media-list -->
      </div><!-- #notifications -->
-     
+     @endguest
    </div><!-- tab-content -->
  </div><!-- sl-sideright -->
  <!-- ########## END: RIGHT PANEL ########## --->

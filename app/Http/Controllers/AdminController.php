@@ -2,7 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Admin;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Hash;
 
 class AdminController extends Controller
 {
@@ -11,74 +14,65 @@ class AdminController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
+    
     public function index()
     {
         return view('admin.home');
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+    public function ChangePassword()
     {
-        //
+        return view('admin.auth.passwordchange');
     }
 
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
-    public function store(Request $request)
+    public function Update_pass(Request $request)
     {
-        //
+      $password=Auth::user()->password;
+
+      $oldpass=$request->oldpass;
+      $newpass=$request->password;
+      $confirm=$request->password_confirmation;
+
+      if (Hash::check($oldpass,$password)) {
+           if ($newpass === $confirm) {
+                      $user=Admin::find(Auth::id());
+                      $user->password=Hash::make($request->password);
+                      $user->save();
+                      Auth::logout();
+
+                      $notification=array(
+                        'messege'=>'Password Changed Successfully ! Now Login with Your New Password',
+                        'alert-type'=>'success'
+                         );
+                       return Redirect()->route('admin.login')->with($notification); 
+                 }else{
+                     $notification=array(
+                        'messege'=>'New password and Confirm Password not matched!',
+                        'alert-type'=>'error'
+                         );
+                       return Redirect()->back()->with($notification);
+                 }     
+      }else{
+        $notification=array(
+                'messege'=>'Old Password not matched!',
+                'alert-type'=>'error'
+                 );
+               return Redirect()->back()->with($notification);
+      }
     }
 
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
+    public function logout()
     {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
+        Auth::logout();
+            $notification=array(
+                'messege'=>'Successfully Logout',
+                'alert-type'=>'success'
+                 );
+             return Redirect()->route('admin.login')->with($notification);
     }
 }

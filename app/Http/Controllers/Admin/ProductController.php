@@ -8,6 +8,11 @@ use Illuminate\Support\Facades\DB;
 use Intervention\Image\Facades\Image;
 class ProductController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('auth:admin');
+    }
+    
     /**
      * Display a listing of the resource.
      *

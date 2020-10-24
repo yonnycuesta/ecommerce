@@ -35,4 +35,12 @@ class CartController extends Controller
             return Response::json(['success'=>'Successfully Added on your Cart']);
         }
     }
+
+    // Comprabar que se haya agregado el producto a la Cart
+
+    public function check(){
+
+        $content = Cart::content();
+        return response()->json($content);
+    }
 }
