@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return view('pages.index');
 });
+// Mail Verification
 Auth::routes(['verify'=> true]);
 Route::get('/home', 'HomeController@index')->name('home');
 
@@ -116,3 +117,6 @@ Route::get('add/wishlist/{id}','WishlistController@add');
 // Add to Cart
 Route::get('add/to/cart/{id}','CartController@add');
 Route::get('check','CartController@check');
+
+// Product Details
+Route::get('/product/details/{id}/{product_name}','ProductController@productView');

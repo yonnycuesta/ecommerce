@@ -55,32 +55,30 @@
 											<li><a href="#">Japanese</a></li>
 										</ul>
 									</li>
-									<li>
-										<a href="#">$ US dollar<i class="fas fa-chevron-down"></i></a>
-										<ul>
-											<li><a href="#">EUR Euro</a></li>
-											<li><a href="#">GBP British Pound</a></li>
-											<li><a href="#">JPY Japanese Yen</a></li>
-										</ul>
-									</li>
+									
 								</ul>
 							</div>
 							<div class="top_bar_user">
+
 								@guest
-								<div><a href="{{ route('login') }}"><div class="user_icon"><img src="{{ asset('public/frontend/images/user.svg') }}" alt=""></div>Register/Login</a></div>
-									@else
-									<ul class="standard_dropdown top_bar_dropdown">
-										<li>
-											<a href=""><div class="user_icon"><img src="{{ asset('public/frontend/images/user.svg') }}" alt=""></div>Profile</a></div>
-											<ul>
-												<li><a href="#">Wishlist</a></li>
-												<li><a href="#">Checkout</a></li>
-												<li><a href="#">Others</a></li>
-											</ul>
-										</li>
-									</ul>
+					   <div><a href="{{ route('login') }}"><div class="user_icon"><img src="{{ asset('public/frontend/images/user.svg')}}" alt=""></div> Register/Login</a></div>
+								@else
+	   
+						   <ul class="standard_dropdown top_bar_dropdown">
+										   <li>
+				  <a href="{{ route('home') }}"><div class="user_icon"><img src="{{ asset('public/frontend/images/user.svg')}}" alt=""></div> Profile<i class="fas fa-chevron-down"></i></a>
+											   <ul>
+												   <li><a href="#">Wishlist</a></li>
+												   <li><a href="#">Checkout</a></li>
+												   <li><a href="#">Others</a></li>
+											   </ul>
+										   </li>
+										   
+									   </ul> 
 								@endguest
-							</div>
+		
+									   
+								   </div>
 						</div>
 					</div>
 				</div>
@@ -133,13 +131,20 @@
 					<div class="col-lg-4 col-9 order-lg-3 order-2 text-lg-left text-right">
 						<div class="wishlist_cart d-flex flex-row align-items-center justify-content-end">
 							<div class="wishlist d-flex flex-row align-items-center justify-content-end">
+								@guest
+									@else
+							@php
+								$wishlist = DB::table('wishlists')->where('user_id', Auth::id())->get();
+							@endphp
+							
+
 								<div class="wishlist_icon"><img src="{{ asset('public/frontend/images/heart.png') }}" alt=""></div>
 								<div class="wishlist_content">
 									<div class="wishlist_text"><a href="#">Wishlist</a></div>
-									<div class="wishlist_count">115</div>
+									<div class="wishlist_count">{{ count($wishlist) }}</div>
 								</div>
 							</div>
-
+							@endguest
 							<!-- Cart -->
 							<div class="cart">
 								<div class="cart_container d-flex flex-row align-items-center justify-content-end">
@@ -283,6 +288,8 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@10"></script>
 <script src="{{ asset('https://unpkg.com/sweetalert/dist/sweetalert.min.js')}}"></script>
 
+<!--Product Details-->
+<script src="{{ asset('public/frontend/js/product_custom.js') }}"></script>
     <script>
         @if(Session::has('messege'))
           var type="{{Session::get('alert-type','info')}}"
