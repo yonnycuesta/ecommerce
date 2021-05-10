@@ -65,7 +65,9 @@
                     </td>
                 </tr>
                 @endforeach
+               
             </tbody>
+           
           </table>
         </div><!-- table-wrapper -->
       </div><!-- card -->

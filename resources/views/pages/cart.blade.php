@@ -1,6 +1,8 @@
 @extends('layouts.app')
 
 @section('content')
+@include('layouts.menubar')
+
 <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/cart_styles.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/cart_responsive.css') }}">
 <div class="cart_section">
@@ -19,10 +21,15 @@
                                         <div class="cart_item_title">Name</div>
                                         <div class="cart_item_text">{{ $ct->name }}</div>
                                     </div>
+                                    @if ($ct->options->color == NULL)
+                                        
+                                    @else
                                     <div class="cart_item_color cart_info_col">
-                                        <div class="cart_item_title">Color</div>
-                                        <div class="cart_item_text">{{ $ct->options->color }}</div>
+                                    <div class="cart_item_title">Color</div>
+                                    <div class="cart_item_text">{{ $ct->options->color }}</div>
                                     </div>
+                                    @endif
+                                    
 
                                     @if ($ct->options->size == NULL)
                                         
@@ -55,7 +62,7 @@
                                         <div class="cart_item_title">Action</div><br>
                                        <a href="{{ url('remove/cart/'.$ct->rowId) }}" class="btn btn-danger btn-sm">x</a>
                                     </div>
-                                </div>
+                                </>
                             </li>
                             @endforeach
                            
@@ -72,7 +79,7 @@
 
                     <div class="cart_buttons">
                         <button type="button" class="button cart_button_clear">All Cancel</button>
-                        <button type="button" class="button cart_button_checkout">Checkout</button>
+                        <a href="{{ route('user.checkout') }}" class="button cart_button_checkout">Checkout</a>
                     </div>
                 </div>
             </div>

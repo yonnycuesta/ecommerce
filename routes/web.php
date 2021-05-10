@@ -122,6 +122,35 @@ Route::get('product/cart','CartController@showCart')->name('show.cart');
 Route::get('remove/cart/{rowId}','CartController@removeCart');
 Route::post('update/cart/item/', 'CartController@updateCart')->name('update.cartitem');
 
+Route::get('/cart/product/view/{id}','CartController@viewProduct');
+Route::post('insert/into/cart/', 'CartController@insertCart')->name('insert.into.cart');
+
+
+Route::get('user/checkout/','CartController@Checkout')->name('user.checkout');
+Route::get('user/wishlist/','CartController@wishlist')->name('user.wishlist');
+
+// Coupon
+Route::post('user/apply/coupon/', 'CartController@coupon')->name('apply.coupon');
+Route::get('coupon/remove/', 'CartController@couponRemove')->name('coupon.remove');
+
 // Product Details
 Route::get('/product/details/{id}/{product_name}','ProductController@productView');
 Route::post('/cart/product/add/{id}', 'ProductController@AddCart');
+
+/// Blog Post Route
+Route::get('blog/post/', 'BlogController@index')->name('blog.post');
+Route::get('blog/single/{id}', 'BlogController@postSingle');
+
+
+/// Languages
+Route::get('language/english', 'BlogController@english')->name('language.english');
+Route::get('language/hindi', 'BlogController@hindi')->name('language.hindi');
+
+// Paymet Step
+Route::get('payment/page', 'CartController@PaymentPage')->name('payment.step');
+Route::post('user/payment/process/','PaymentController@Payment')->name('payment.process');
+Route::post('user/stripe/charge/','PaymentController@StripeCharge')->name('stripe.charge');
+
+// Products details Page
+Route::get('products/{id}','ProductController@ProductsView');
+Route::get('allcategory/{id}','ProductController@CategoryView');

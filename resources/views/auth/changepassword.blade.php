@@ -61,7 +61,7 @@
         </div>
         <div class="col-4">
             <div class="card">
-              <img src="{{ asset('public/frontend/images/user1.jpg') }}" class="card-img-top" style="height: 90px; width:90px; margin-left:34%; margin-top:5px; border-radius:50%">
+              <img src="{{ asset('public/frontend/images/kaziariyan.png') }}" class="card-img-top" style="height: 90px; width:90px; margin-left:34%; margin-top:5px; border-radius:50%">
               <div class="card-body">
                 <h5 class="card-title text-center">{{ Auth::user()->name }}</h5>
               </div>

@@ -21,14 +21,14 @@
                             <ul class="cat_menu">
                                @foreach ($category as $cat)
                                 <li class="hassubs">
-                                    <a href="#">{{ $cat->category_name }}<i class="fas fa-chevron-right"></i></a>
+                                    <a href="{{ url('allcategory/'.$cat->id) }}">{{ $cat->category_name }}<i class="fas fa-chevron-right"></i></a>
                                     <ul>
                                         @php
                                             $subcategory = DB::table('subcategories')->where('category_id',$cat->id)->get();
                                         @endphp
                                          @foreach ($subcategory as $row)
                                         <li class="hassubs">
-                                            <a href="#">{{ $row->subcategory_name }}<i class="fas fa-chevron-right"></i></a>
+                                            <a href="{{ url('products/'.$row->id) }}">{{ $row->subcategory_name }}<i class="fas fa-chevron-right"></i></a>
                                         
                                         </li>
                                         @endforeach
@@ -87,7 +87,7 @@
                                         <li><a href="contact.html">Contact<i class="fas fa-chevron-down"></i></a></li>
                                     </ul>
                                 </li>
-                                <li><a href="blog.html">Blog<i class="fas fa-chevron-down"></i></a></li>
+                                <li><a href="{{ route('blog.post') }}">Blog<i class="fas fa-chevron-down"></i></a></li>
                                 <li><a href="contact.html">Contact<i class="fas fa-chevron-down"></i></a></li>
                             </ul>
                         </div>
@@ -197,30 +197,3 @@
 
 </header>
 
-<!-- Banner -->
-
-@php
-    $slider = DB::table('products')->join('brands','products.brand_id','brands.id')->select('products.*','brands.brand_name')->where('main_slider',1)->orderBy('id','DESC')->first();
-@endphp
-<div class="banner">
-    <div class="banner_background" style="background-image:url(images/banner_background.jpg)"></div>
-    <div class="container fill_height">
-        <div class="row fill_height">
-            <div class="banner_product_image"><img src="{{ asset($slider->image_one) }}" alt="" style="height: 450px;"></div>
-            <div class="col-lg-5 offset-lg-4 fill_height">
-                <div class="banner_content">
-                    <h1 class="banner_text">{{ $slider->product_name }}</h1>
-                    <div class="banner_price">
-                        @if ($slider->discount_price == NULL)
-                            <h2>${{ $slider->selling_price }}</h2>
-                        @else
-                        <span>${{ $slider->discount_price  }}</span>${{ $slider->selling_price}}
-                        @endif
-                    </div>
-                    <div class="banner_product_name">{{ $slider->brand_name }}</div>
-                    <div class="button banner_button"><a href="#">Shop Now</a></div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>

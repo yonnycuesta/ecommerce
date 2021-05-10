@@ -1,4 +1,8 @@
 
+@php
+      $users = DB::table('users')->get();    
+@endphp
+
 @extends('layouts.app')
 
 @section('content')
@@ -11,24 +15,26 @@
           <thead>
             <tr>
               <th scope="col">#</th>
-              <th scope="col">First</th>
-              <th scope="col">Last</th>
-              <th scope="col">Body</th>
+              <th scope="col">Name</th>
+              <th scope="col">Phone</th>
+              <th scope="col">Email</th>
             </tr>
           </thead>
           <tbody>
+          @foreach ($users as $use)
             <tr>
               <td scope="col"></td>
-              <td scope="col"></td>
-              <td scope="col"></td>
-              <td scope="col"></td>
+              <td scope="col">{{$use->name}}</td>
+              <td scope="col">{{$use->phone}}</td>
+              <td scope="col">{{$use->email}}</td>
             </tr>
+            @endforeach
           </tbody>
         </table>
       </div>
       <div class="col-4">
         <div class="card">
-          <img src="{{ asset('public/frontend/images/user1.jpg') }}" class="card-img-top" style="height: 90px; width:90px; margin-left:34%; margin-top:5px; border-radius:50%">
+          <img src="{{ asset('public/frontend/images/kaziariyan.png') }}" class="card-img-top" style="height: 90px; width:90px; margin-left:34%; margin-top:5px; border-radius:50%">
           <div class="card-body">
             <h5 class="card-title text-center">{{ Auth::user()->name }}</h5>
           </div>

@@ -7,7 +7,7 @@
 <meta name="description" content="OneTech shop project">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/bootstrap4/bootstrap.min.css') }}">
-<link href="{{ asset('public/frontend/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css') }}" rel="stylesheet" type="text/css">
+<link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/plugins/fontawesome-free-5.0.1/css/fontawesome-all.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/plugins/OwlCarousel2-2.2.1/owl.carousel.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/plugins/OwlCarousel2-2.2.1/owl.theme.default.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/plugins/OwlCarousel2-2.2.1/animate.css') }}">
@@ -15,6 +15,9 @@
 <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/main_styles.css') }}">
 <link rel="stylesheet" type="text/css" href="{{ asset('public/frontend/styles/responsive.css') }}">
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
+
+<script src="https://js.stripe.com/v3"></script>
+
 
 </head>
 
@@ -39,19 +42,21 @@
 								
 								<ul class="standard_dropdown top_bar_dropdown">
 									
+									@php
+										$language = Session()->get('lang');
+									@endphp
 									<li>
 										
 										<a href="{{ route('admin.login') }}">Login/Admin<i class="fas fa-chevron-down"></i></a>
 										
 									</li>
 									<li>
+												@if (Session()->get('lang') == 'hindi')
+												<a href="{{ route('language.english') }}">English<i class="fas fa-chevron-down"></i></a>
+												@else
+												<a href="{{ route('language.hindi') }}">Hindi<i class="fas fa-chevron-down"></i></a>
+												@endif
 										
-										<a href="#">English<i class="fas fa-chevron-down"></i></a>
-										<ul>
-											<li><a href="#">Italian</a></li>
-											<li><a href="#">Spanish</a></li>
-											<li><a href="#">Japanese</a></li>
-										</ul>
 									</li>
 									
 								</ul>
@@ -66,8 +71,8 @@
 										   <li>
 				  <a href="{{ route('home') }}"><div class="user_icon"><img src="{{ asset('public/frontend/images/user.svg')}}" alt=""></div> Profile<i class="fas fa-chevron-down"></i></a>
 											   <ul>
-												   <li><a href="#">Wishlist</a></li>
-												   <li><a href="#">Checkout</a></li>
+												   <li><a href="{{ route('user.wishlist') }}">Wishlist</a></li>
+												   <li><a href="{{ route('user.checkout') }}">Checkout</a></li>
 												   <li><a href="#">Others</a></li>
 											   </ul>
 										   </li>
@@ -138,7 +143,7 @@
 
 								<div class="wishlist_icon"><img src="{{ asset('public/frontend/images/heart.png') }}" alt=""></div>
 								<div class="wishlist_content">
-									<div class="wishlist_text"><a href="#">Wishlist</a></div>
+									<div class="wishlist_text"><a href="{{ route('user.wishlist') }}">Wishlist</a></div>
 									<div class="wishlist_count">{{ count($wishlist) }}</div>
 								</div>
 							</div>
@@ -152,7 +157,7 @@
 									</div>
 									<div class="cart_content">
 										<div class="cart_text"><a href="{{ route('show.cart') }}">Cart</a></div>
-										<div class="cart_price">${{ Cart::subtotal() }}</div>
+										<div class="cart_price">${{ str_replace(',','',Cart::subtotal())   }}</div>
 									</div>
 								</div>
 							</div>
