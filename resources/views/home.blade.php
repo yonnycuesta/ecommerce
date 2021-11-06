@@ -1,6 +1,6 @@
 
 @php
-      $users = DB::table('users')->get();    
+     $orders = DB::table('orders')->where('user_id', Auth::id())->orderBy('id', 'DESC')->limit(10)->get();
 @endphp
 
 @extends('layouts.app')
@@ -14,19 +14,25 @@
         <table class="table table-response">
           <thead>
             <tr>
-              <th scope="col">#</th>
-              <th scope="col">Name</th>
-              <th scope="col">Phone</th>
-              <th scope="col">Email</th>
+              <th scope="col">Payment Type</th>
+              <th scope="col">Payment ID</th>
+              <th scope="col">Amount</th>
+              <th scope="col">Date</th>
+              <th scope="col">Status Code</th>
+              <th scope="col">Action</th>
             </tr>
           </thead>
           <tbody>
-          @foreach ($users as $use)
+          @foreach ($orders as $order)
             <tr>
-              <td scope="col"></td>
-              <td scope="col">{{$use->name}}</td>
-              <td scope="col">{{$use->phone}}</td>
-              <td scope="col">{{$use->email}}</td>
+              <td scope="col">{{$order->payment_type}}</td>
+              <td scope="col">{{$order->payment_id}}</td>
+              <td scope="col">${{$order->total}}</td>
+              <td scope="col">{{$order->date}}</td>
+              <td scope="col">{{$order->status_code}}</td>
+              <td scope="col">
+              <a href="" class="btn btn-sm btn-primary">view</a>
+              </td>
             </tr>
             @endforeach
           </tbody>

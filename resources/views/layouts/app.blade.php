@@ -23,6 +23,9 @@
 
 <body>
 
+@php 
+$setting = DB::table('sitesetting')->get();
+@endphp
 <div class="super_container">
 	
 	<!-- Header -->
@@ -34,10 +37,29 @@
 		<div class="top_bar">
 			<div class="container">
 				<div class="row">
+					@foreach($setting as $set)
 					<div class="col d-flex flex-row">
-						<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{{ asset('public/frontend/images/phone.png') }}" alt=""></div>+38 068 005 3570</div>
-						<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{{ asset('public/frontend/images/mail.png') }}" alt=""></div><a href="mailto:fastsales@gmail.com">fastsales@gmail.com</a></div>
+						<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{{ asset('public/frontend/images/phone.png') }}" alt=""></div>{{ $set->phone_one}}</div>
+						<div class="top_bar_contact_item"><div class="top_bar_icon"><img src="{{ asset('public/frontend/images/mail.png') }}" alt=""></div><a href="mailto:fastsales@gmail.com">{{ $set->email}}</a></div>
+
+					@endforeach	
 						<div class="top_bar_content ml-auto">
+
+							@guest
+
+							@else
+							<div class="top_bar_menu">
+								<ul class="standard_dropdown top_bar_dropdown">
+									<li>
+										
+										<a href="" data-toggle="modal" data-target="#exampleModal">My Order Tracking<i class="fas fa-chevron-down"></i></a>
+										
+									</li>
+								</ul>
+							</div>
+							@endguest
+							
+
 							<div class="top_bar_menu">
 								
 								<ul class="standard_dropdown top_bar_dropdown">
@@ -178,26 +200,27 @@
 			<div class="row">
 
 				<div class="col-lg-3 footer_col">
+					@foreach ($setting as $set)
 					<div class="footer_column footer_contact">
 						<div class="logo_container">
 							<div class="logo"><a href="#">OneTech</a></div>
 						</div>
-						<div class="footer_title">Got Question? Call Us 24/7</div>
-						<div class="footer_phone">+38 068 005 3570</div>
+						<div class="footer_title">{{ $set->company_name}}</div>
+						<div class="footer_phone">+{{ $set->phone_two }}</div>
 						<div class="footer_contact_text">
-							<p>17 Princess Road, London</p>
-							<p>Grester London NW18JR, UK</p>
+							<p>{{ $set->company_address}}</p>
 						</div>
 						<div class="footer_social">
 							<ul>
-								<li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-								<li><a href="#"><i class="fab fa-twitter"></i></a></li>
-								<li><a href="#"><i class="fab fa-youtube"></i></a></li>
-								<li><a href="#"><i class="fab fa-google"></i></a></li>
+								<li><a href="{{ $set->facebook }}"><i class="fab fa-facebook-f"></i></a></li>
+								<li><a href="{{ $set->twitter }}"><i class="fab fa-twitter"></i></a></li>
+								<li><a href="{{ $set->youtube }}"><i class="fab fa-youtube"></i></a></li>
+								<li><a href="{{ $set->instagram }}"><i class="fab fa-instagram"></i></a></li>
 								<li><a href="#"><i class="fab fa-vimeo-v"></i></a></li>
 							</ul>
 						</div>
 					</div>
+					@endforeach
 				</div>
 
 				<div class="col-lg-2 offset-lg-2">
@@ -274,6 +297,41 @@ Copyright &copy;<script>document.write(new Date().getFullYear());</script> All r
 		</div>
 	</div>
 </div>
+
+<!-- My Order Tracking Modal-->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog">
+	  <div class="modal-content">
+		<div class="modal-header">
+		  <h5 class="modal-title" id="exampleModalLabel">Your Status Code</h5>
+		  <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+			<span aria-hidden="true">&times;</span>
+		  </button>
+		</div>
+		<div class="modal-body">
+		 <form method="POST" action="{{ route('admin.order.tracking') }}">
+			@csrf
+			<div class="modal-body">
+				<label for="">Status Code</label>
+				<input type="text" name="code" required="" class="form-control" placeholder="Your Order Status Code">
+			</div>
+			<button class="btn btn-danger" type="submit">Track Now</button>
+		 </form>
+		</div>
+		
+	  </div>
+	</div>
+  </div>
+
+
+
+
+
+
+
+
+
+
 
 <script src="{{ asset('public/frontend/js/jquery-3.3.1.min.js') }}"></script>
 <script src="{{ asset('public/frontend/styles/bootstrap4/popper.js') }}"></script>

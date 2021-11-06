@@ -141,7 +141,6 @@ Route::post('/cart/product/add/{id}', 'ProductController@AddCart');
 Route::get('blog/post/', 'BlogController@index')->name('blog.post');
 Route::get('blog/single/{id}', 'BlogController@postSingle');
 
-
 /// Languages
 Route::get('language/english', 'BlogController@english')->name('language.english');
 Route::get('language/hindi', 'BlogController@hindi')->name('language.hindi');
@@ -154,3 +153,51 @@ Route::post('user/stripe/charge/','PaymentController@StripeCharge')->name('strip
 // Products details Page
 Route::get('products/{id}','ProductController@ProductsView');
 Route::get('allcategory/{id}','ProductController@CategoryView');
+
+
+// Admin Orders
+Route::get('admin/pading/order','Admin\OrderController@newOrder')->name('admin.neworder');
+Route::get('admin/view/order/{id}','Admin\OrderController@viewOrder');
+Route::get('admin/payment/accept/{id}', 'Admin\OrderController@PaymentAccept');
+Route::get('admin/payment/cancel/{id}', 'Admin\OrderController@paymentCancel');
+Route::get('admin/accept/payment','Admin\OrderController@AcceptPayment')->name('admin.accept.payment');
+Route::get('admin/cancel/order','Admin\OrderController@CancelOrder')->name('admin.cancel.order');
+Route::get('admin/payment/proccess','Admin\OrderController@ProccessPayment')->name('admin.proccess.payment');
+Route::get('admin/payment/succcess','Admin\OrderController@SuccessPayment')->name('admin.success.payment');
+
+Route::get('admin/delivery/proccess/{id}','Admin\OrderController@DeliveryProccess');
+Route::get('admin/delivery/done/{id}','Admin\OrderController@DeliveryDone');
+
+// Seo Setting
+Route::get('admin/seo', 'Admin\SeoController@index')->name('admin.seo.index');
+Route::get('admin/seo/create', 'Admin\SeoController@create')->name('admin.seo.create');
+Route::post('admin/seo/create', 'Admin\SeoController@store')->name('admin.seo.store');
+Route::get('admin/seo/edit/{id}', 'Admin\SeoController@edit');
+Route::post('admin/seo/update/{id}', 'Admin\SeoController@update')->name('admin.seo.update');
+Route::get('admin/seo/delete/{id}', 'Admin\SeoController@destroy');
+
+// Order Tracking
+Route::post('admin/order/tracking', 'Admin\OrderController@tracking')->name('admin.order.tracking');
+
+// Order Reports
+Route::get('admin/order/report-today', 'Admin\ReportController@orderToday')->name('admin.report.ordertoday');
+Route::get('admin/order/delivery-today', 'Admin\ReportController@orderDeliveryToday')->name('admin.report.deliverytoday');
+Route::get('admin/order/this-month', 'Admin\ReportController@orderThisMonth')->name('admin.report.this.month');
+Route::get('admin/order/search-report', 'Admin\ReportController@Search')->name('admin.report.search');
+
+Route::post('admin/order/search/by-year', 'Admin\ReportController@SearchByYear')->name('search.by.year');
+Route::post('admin/order/search/by-month', 'Admin\ReportController@SearchByMonth')->name('search.by.month');
+Route::post('admin/order/search/by-date', 'Admin\ReportController@SearchByDate')->name('search.by.date');
+
+// Admin Role
+Route::get('admin/all/user', 'Admin\UserRoleController@UserRole')->name('admin.all.user');
+Route::get('admin/create/admin', 'Admin\UserRoleController@UserCreate')->name('admin.create');
+Route::post('admin/create/admin', 'Admin\UserRoleController@UserStore')->name('admin.store');
+Route::get('admin/edit/admin/{id}', 'Admin\UserRoleController@UserEdit');
+Route::get('admin/delete/admin/{id}', 'Admin\UserRoleController@UserDelete');
+Route::post('admin/update/admin', 'Admin\UserRoleController@UserUpdate')->name('admin.update');
+
+
+// Admin Site Settings
+Route::get('admin/site/setting', 'Admin\SettingController@index')->name('admin.site.setting');
+Route::post('admin/sitesetting', 'Admin\SettingController@update')->name('update.sitesetting');
